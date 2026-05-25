@@ -1,65 +1,230 @@
 import Image from "next/image";
+import Link from "next/link";
+import "./page.css";
+
+const categories = ["Textbooks", "Electronics", "Clothing", "Furnitures"];
+const testimonials = [
+  { emoji: "📚", text: "Great deals on textbooks", author: "Sarah, Junior" },
+  { emoji: "🛋️", text: "Helped furnish my dorm easily", author: "Mike, Freshman" },
+  { emoji: "💰", text: "Saved 40% on electronics", author: "Alex, Senior" },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="landing-page">
+      {/* Navigation */}
+      <nav className="landing-nav">
+        <Link href="/" aria-label="CampusCart home" className="landing-logo-link">
+          <Image
+            src="/campuscart-logo.png"
+            alt="CampusCart"
+            width={150}
+            height={150}
+            className="landing-logo"
+            priority
+          />
+        </Link>
+
+        <div className="nav-links">
+          <a href="#features">Features</a>
+          <a href="#categories">Categories</a>
+          <a href="#testimonials">Reviews</a>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="nav-actions">
+          <Link href="/login" className="nav-login">
+            Login
+          </Link>
+          <Link href="/register" className="nav-register">
+            Register
+          </Link>
         </div>
-      </main>
-    </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-glow hero-glow-one" />
+        <div className="hero-glow hero-glow-two" />
+
+        <div className="container">
+          <div className="hero-content">
+            <p className="hero-pill">Student-first campus marketplace</p>
+            <h1>Smart deals for campus life</h1>
+            <p className="hero-text">
+              Buy, sell, rent, or swap with students at your campus. Fast pickups, verified transactions, and prices that make sense for student budgets.
+            </p>
+
+            <div className="hero-actions">
+              <Link href="/register" className="btn btn-primary">
+                Get started free
+              </Link>
+              <Link href="#features" className="btn btn-secondary">
+                See how it works
+              </Link>
+            </div>
+
+            <div className="hero-stats-grid">
+              <div className="stat-item">
+                <div className="stat-value">2k+</div>
+                <div className="stat-label">Active listings</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-value">24h</div>
+                <div className="stat-label">Avg. pickup time</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-value">40%</div>
+                <div className="stat-label">Avg. savings</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="features-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Why choose CampusCart?</h2>
+            <p>Built specifically for student needs</p>
+          </div>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🏫</div>
+              <h3>Campus-only network</h3>
+              <p>Connect with verified students from your college or university</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">⚡</div>
+              <h3>Lightning-fast pickups</h3>
+              <p>Meet nearby for quick, convenient transactions on your schedule</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">💡</div>
+              <h3>Smart pricing</h3>
+              <p>Student-friendly prices for textbooks, furniture, tech, and more</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🔒</div>
+              <h3>Safe & secure</h3>
+              <p>Verified campus identities and built-in buyer protection</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Listings Section */}
+      <section className="listings-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Popular right now</h2>
+            <p>See what&apos;s trending on campus</p>
+          </div>
+
+          <div className="listing-board">
+            <article className="listing-card">
+              <div className="listing-image image-book" />
+              <h3>Psychology textbook</h3>
+              <p className="listing-desc">Used, great condition</p>
+              <div className="listing-footer">
+                <span>📍 3 min away</span>
+                <span className="listing-price">Rs. 2,800</span>
+              </div>
+            </article>
+
+            <article className="listing-card">
+              <div className="listing-image image-fridge" />
+              <h3>Mini fridge</h3>
+              <p className="listing-desc">Available to rent</p>
+              <div className="listing-footer">
+                <span>📍 Dorm area</span>
+                <span className="listing-price">Rs. 1,200</span>
+              </div>
+            </article>
+
+            <article className="listing-card">
+              <div className="listing-image image-laptop" />
+              <h3>USB-C charger</h3>
+              <p className="listing-desc">Fast charging</p>
+              <div className="listing-footer">
+                <span>📍 Library</span>
+                <span className="listing-price">Rs. 800</span>
+              </div>
+            </article>
+
+            <article className="listing-card">
+              <div className="listing-image image-chair" />
+              <h3>Office chair</h3>
+              <p className="listing-desc">Barely used</p>
+              <div className="listing-footer">
+                <span>📍 5 min away</span>
+                <span className="listing-price">Rs. 3,500</span>
+              </div>
+            </article>
+          </div>
+
+          <div className="section-cta">
+            <Link href="/register" className="btn btn-primary">
+              Browse all listings
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Categories Section */}
+      <section id="categories" className="categories-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Shop by category</h2>
+            <p>Find exactly what you need</p>
+          </div>
+
+          <div className="category-grid">
+            {categories.map((category) => (
+              <div key={category} className="category-item">
+                {category}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="testimonials-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>Loved by students</h2>
+            <p>Real reviews from real students</p>
+          </div>
+
+          <div className="testimonials-grid">
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className="testimonial-card">
+                <div className="testimonial-emoji">{testimonial.emoji}</div>
+                <p className="testimonial-text">{testimonial.text}</p>
+                <p className="testimonial-author">{testimonial.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="container">
+          <h2>Ready to join CampusCart?</h2>
+          <p>Start buying, selling, or renting in minutes</p>
+          <div className="cta-buttons">
+            <Link href="/register" className="btn btn-primary btn-large">
+              Create account
+            </Link>
+            <Link href="/login" className="btn btn-secondary btn-large">
+              Already have an account?
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
