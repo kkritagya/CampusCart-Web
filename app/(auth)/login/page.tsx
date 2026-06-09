@@ -2,17 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useActionState } from "react";
-import { loginAction, type AuthActionState } from "@/lib/actions/authentication_action";
+import type { FormEvent } from "react";
 import "./login.css";
 
-const initialState: AuthActionState = {
-  success: false,
-  message: "",
-};
-
 export default function LoginPage() {
-  const [state, formAction, isPending] = useActionState(loginAction, initialState);
+  function handleLoginSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    window.alert("Login successful!");
+    event.currentTarget.reset();
+  }
 
   return (
     <main className="auth-shell">
@@ -45,7 +43,7 @@ export default function LoginPage() {
               <p>Enter your details to continue trading with students near you.</p>
             </div>
 
-            <form className="auth-form" action={formAction}>
+            <form className="auth-form" onSubmit={handleLoginSubmit}>
               <label className="field" htmlFor="email">
                 <span>Email</span>
                 <input
@@ -56,9 +54,6 @@ export default function LoginPage() {
                   placeholder="you@gmail.com"
                   required
                 />
-                {state.fieldErrors?.email ? (
-                  <span className="field-error">{state.fieldErrors.email[0]}</span>
-                ) : null}
               </label>
 
               <label className="field" htmlFor="password">
@@ -71,9 +66,6 @@ export default function LoginPage() {
                   placeholder="Enter your password"
                   required
                 />
-                {state.fieldErrors?.password ? (
-                  <span className="field-error">{state.fieldErrors.password[0]}</span>
-                ) : null}
               </label>
 
               <div className="form-options">
@@ -84,14 +76,8 @@ export default function LoginPage() {
                 <Link href="/forget_password">Forgot password?</Link>
               </div>
 
-              {state.message ? (
-                <p className="form-message form-message-error" role="alert">
-                  {state.message}
-                </p>
-              ) : null}
-
-              <button type="submit" className="auth-button" disabled={isPending}>
-                {isPending ? "Signing in..." : "Sign in"}
+              <button type="submit" className="auth-button">
+                Sign in
               </button>
             </form>
 
