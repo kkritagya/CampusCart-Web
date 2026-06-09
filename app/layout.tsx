@@ -1,3 +1,5 @@
+import { getCurrentUserAction } from "@/lib/actions/authentication_action";
+import { AuthProvider } from "@/lib/context";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -17,17 +19,21 @@ export const metadata: Metadata = {
   description: "A student-first marketplace for buying, selling, renting, and trading on campus.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getCurrentUserAction();
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider initialUser={user}>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
