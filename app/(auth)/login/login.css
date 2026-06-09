@@ -468,10 +468,28 @@
   font-weight: 800;
 }
 
+.form-message-error {
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #b42318;
+}
+
+.field-error {
+  color: #b42318;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .auth-button:hover {
   transform: translateY(-1px);
   background: #1d63d8;
   box-shadow: 0 16px 32px rgba(29, 99, 216, 0.26);
+}
+
+.auth-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+  transform: none;
 }
 
 .auth-switch {

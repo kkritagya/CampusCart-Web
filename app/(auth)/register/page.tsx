@@ -2,31 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
-import { useState } from "react";
+import { useActionState } from "react";
+import { registerAction, type AuthActionState } from "@/lib/actions/authentication_action";
 import "../login/login.css";
 import "./register.css";
 
+const initialState: AuthActionState = {
+  success: false,
+  message: "",
+};
+
 export default function RegisterPage() {
-  const router = useRouter();
-  const [formMessage, setFormMessage] = useState("");
-
-  function handleRegisterSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setFormMessage("");
-
-    const formData = new FormData(event.currentTarget);
-    const password = formData.get("password");
-    const confirmPassword = formData.get("confirmPassword");
-
-    if (password !== confirmPassword) {
-      setFormMessage("Passwords do not match.");
-      return;
-    }
-
-    router.push("/login");
-  }
+  const [state, formAction, isPending] = useActionState(registerAction, initialState);
 
   return (
     <main className="auth-shell">
@@ -43,7 +30,7 @@ export default function RegisterPage() {
               <p>Set up your student marketplace account in under a minute.</p>
             </div>
 
-            <form className="auth-form" onSubmit={handleRegisterSubmit}>
+            <form className="auth-form" action={formAction}>
               <label className="field" htmlFor="fullName">
                 <span>Full name</span>
                 <input
@@ -54,6 +41,9 @@ export default function RegisterPage() {
                   placeholder="Alex Morgan"
                   required
                 />
+                {state.fieldErrors?.fullName ? (
+                  <span className="field-error">{state.fieldErrors.fullName[0]}</span>
+                ) : null}
               </label>
 
               <label className="field" htmlFor="email">
@@ -66,6 +56,9 @@ export default function RegisterPage() {
                   placeholder="you@gmail.com"
                   required
                 />
+                {state.fieldErrors?.email ? (
+                  <span className="field-error">{state.fieldErrors.email[0]}</span>
+                ) : null}
               </label>
 
               <label className="field" htmlFor="password">
@@ -78,6 +71,9 @@ export default function RegisterPage() {
                   placeholder="Create a password"
                   required
                 />
+                {state.fieldErrors?.password ? (
+                  <span className="field-error">{state.fieldErrors.password[0]}</span>
+                ) : null}
               </label>
 
               <label className="field" htmlFor="confirmPassword">
@@ -90,16 +86,19 @@ export default function RegisterPage() {
                   placeholder="Repeat your password"
                   required
                 />
+                {state.fieldErrors?.confirmPassword ? (
+                  <span className="field-error">{state.fieldErrors.confirmPassword[0]}</span>
+                ) : null}
               </label>
 
-              {formMessage ? (
-                <p className="form-message" role="alert">
-                  {formMessage}
+              {state.message ? (
+                <p className="form-message form-message-error" role="alert">
+                  {state.message}
                 </p>
               ) : null}
 
-              <button type="submit" className="auth-button">
-                Create account
+              <button type="submit" className="auth-button" disabled={isPending}>
+                {isPending ? "Creating account..." : "Create account"}
               </button>
             </form>
 
