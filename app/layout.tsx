@@ -1,18 +1,9 @@
 import { getCurrentUserAction } from "@/lib/actions/authentication_action";
 import { AuthProvider } from "@/lib/context";
+import { FrontendDataProvider } from "@/lib/context/FrontendDataContext";
+import { fetchListings } from "@/lib/api/listing_api";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "CampusCart",
@@ -25,14 +16,18 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await getCurrentUserAction();
+  const listingsResult = await fetchListings();
 
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <AuthProvider initialUser={user}>{children}</AuthProvider>
+        <AuthProvider initialUser={user}>
+          <FrontendDataProvider
+            apiListings={listingsResult.success ? listingsResult.data : []}
+          >
+            {children}
+          </FrontendDataProvider>
+        </AuthProvider>
       </body>
     </html>
   );
