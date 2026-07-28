@@ -30,7 +30,7 @@ export function loginUser(payload: LoginPayload) {
 }
 
 export function fetchCurrentUser() {
-  return apiRequest<AuthUser>(AUTH_ENDPOINTS.me, {
+  return apiRequest<AuthUser>(AUTH_ENDPOINTS.whoami, {
     authenticated: true,
   });
 }
@@ -39,6 +39,36 @@ export function logoutUser() {
   return apiRequest<{ message?: string }>(AUTH_ENDPOINTS.logout, {
     method: "POST",
     authenticated: true,
+  });
+}
+
+export function updateUserProfile(payload: FormData) {
+  return apiRequest<AuthUser>(AUTH_ENDPOINTS.update, {
+    method: "PUT",
+    body: payload,
+    authenticated: true,
+  });
+}
+
+export function changePassword(payload: unknown) {
+  return apiRequest<{ message?: string }>(AUTH_ENDPOINTS.changePassword, {
+    method: "PUT",
+    body: payload,
+    authenticated: true,
+  });
+}
+
+export function requestPasswordReset(email: string) {
+  return apiRequest<undefined>(AUTH_ENDPOINTS.forgotPassword, {
+    method: "POST",
+    body: { email },
+  });
+}
+
+export function submitPasswordReset(token: string, newPassword: string) {
+  return apiRequest<undefined>(AUTH_ENDPOINTS.resetPassword, {
+    method: "POST",
+    body: { token, newPassword },
   });
 }
 
