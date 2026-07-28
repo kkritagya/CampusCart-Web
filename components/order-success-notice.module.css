@@ -1,0 +1,47 @@
+.notice {
+  position: fixed;
+  z-index: 1000;
+  top: 5.5rem;
+  right: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  max-width: calc(100vw - 2.5rem);
+  padding: .9rem 1rem;
+  border: 1px solid #a9dec2;
+  border-radius: .75rem;
+  background: #edfbf4;
+  color: #11633d;
+  box-shadow: 0 12px 32px rgba(7, 26, 61, .18);
+  font-weight: 700;
+}
+
+.icon {
+  display: grid;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #19734a;
+  color: #fff;
+  font-size: .85rem;
+}
+
+.notice button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (max-width: 36rem) {
+  .notice {
+    top: 4.75rem;
+    right: .75rem;
+    left: .75rem;
+  }
+}
