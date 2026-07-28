@@ -1,0 +1,4 @@
+.filters{display:flex;flex-wrap:wrap;gap:.35rem}
+.filters button{padding:.4rem .7rem;border:1px solid #c5d0e2;border-radius:999px;background:#fff;color:#4d5668;cursor:pointer}
+.filters .activeFilter{border-color:#0758d8;background:#0758d8;color:#fff}
+.notice{margin:.75rem 1.15rem;padding:.65rem .8rem;border-radius:.4rem;background:#e8f4ff;color:#0758d8;font-size:.78rem}
