@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "../login/login.css";
 import "./forgot_password.css";
+import { ForgotPasswordForm } from "./forgot-password-form";
 
 export default function ForgetPasswordPage() {
   return (
@@ -17,23 +18,7 @@ export default function ForgetPasswordPage() {
           <p>Enter your email and we&apos;ll send reset instructions for your CampusCart account.</p>
         </div>
 
-        <form className="auth-form">
-          <label className="field" htmlFor="email">
-            <span>Email</span>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@campus.edu"
-              required
-            />
-          </label>
-
-          <button type="submit" className="auth-button">
-            Send reset link
-          </button>
-        </form>
+        <ForgotPasswordForm />
 
         <p className="auth-switch">
           Remembered it? <Link href="/login">Back to login</Link>

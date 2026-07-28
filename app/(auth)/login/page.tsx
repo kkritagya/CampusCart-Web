@@ -49,6 +49,7 @@ export default function LoginPage() {
               <label className="field" htmlFor="email">
                 <span>Email</span>
                 <input
+                  suppressHydrationWarning
                   id="email"
                   name="email"
                   type="email"
@@ -64,6 +65,7 @@ export default function LoginPage() {
               <label className="field" htmlFor="password">
                 <span>Password</span>
                 <input
+                  suppressHydrationWarning
                   id="password"
                   name="password"
                   type="password"
@@ -90,7 +92,12 @@ export default function LoginPage() {
                 </p>
               ) : null}
 
-              <button type="submit" className="auth-button" disabled={isPending}>
+              <button
+                suppressHydrationWarning
+                type="submit"
+                className="auth-button"
+                disabled={isPending}
+              >
                 {isPending ? "Signing in..." : "Sign in"}
               </button>
             </form>
