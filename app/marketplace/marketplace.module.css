@@ -1,0 +1,461 @@
+.page {
+  min-width: 0;
+  min-height: 100vh;
+  background: var(--color-page);
+  color: var(--color-navy);
+}
+
+.pageHeader {
+  padding-block: 1.65rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-card);
+}
+
+.eyebrow {
+  margin: 0 0 0.65rem;
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.headerRow {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.headerRow h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 760;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.headerRow div > p {
+  margin: 0.4rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+}
+
+.listingCount {
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-page);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.searchField {
+  display: flex;
+  width: min(100%, 35rem);
+  min-height: 2.55rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-inline: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-card);
+  box-shadow: none;
+}
+
+.searchField:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(115, 169, 255, 0.3);
+}
+
+.searchField input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-navy);
+  font: inherit;
+}
+
+.searchIcon {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: 50%;
+}
+
+.searchIcon::after {
+  position: absolute;
+  right: -0.35rem;
+  bottom: -0.2rem;
+  width: 0.5rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-text-secondary);
+  content: "";
+  transform: rotate(45deg);
+}
+
+.marketplaceLayout {
+  display: grid;
+  grid-template-columns: 11.75rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1.6rem;
+  padding-block: 1.65rem 4rem;
+}
+
+.filterToggle {
+  display: none;
+}
+
+.filters {
+  position: sticky;
+  top: 6rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.filterHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.filterHeading h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.filterHeading button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.filterGroup {
+  display: grid;
+  gap: 0.48rem;
+  margin: 0;
+  padding: 0.85rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.filterGroup legend {
+  margin-bottom: 0.7rem;
+  padding: 0;
+  color: var(--color-navy);
+  font-size: 0.82rem;
+  font-weight: 820;
+}
+
+.filterGroup > label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-text-secondary);
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.filterGroup input[type="radio"],
+.filterGroup input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+.priceFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.priceFields label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+}
+
+.priceFields input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  background: var(--color-card);
+  color: var(--color-navy);
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.filters > button:last-child {
+  margin-top: 1rem;
+}
+
+.results {
+  min-width: 0;
+}
+
+.resultsToolbar {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.resultsToolbar p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.resultsToolbar strong {
+  color: var(--color-navy);
+}
+
+.resultsToolbar label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.resultsToolbar select {
+  min-height: 2.7rem;
+  padding: 0.55rem 2.25rem 0.55rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-card);
+  color: var(--color-navy);
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.emptyState {
+  display: grid;
+  min-height: 24rem;
+  place-items: center;
+  align-content: center;
+  gap: 0.7rem;
+  padding: 2rem;
+  border: 1px dashed #b8c8db;
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  text-align: center;
+}
+
+.emptyState h2,
+.emptyState p {
+  margin: 0;
+}
+
+.emptyState p {
+  color: var(--color-text-secondary);
+}
+
+.skeletonCard {
+  min-height: 23rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+}
+
+.skeletonMedia,
+.skeletonLine,
+.skeletonLineShort {
+  border-radius: 0.55rem;
+  background: linear-gradient(90deg, #e8eef6 25%, #f5f8fc 50%, #e8eef6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.skeletonMedia {
+  height: 12rem;
+  margin-bottom: 1.25rem;
+}
+
+.skeletonLine,
+.skeletonLineShort {
+  height: 0.85rem;
+  margin-top: 0.8rem;
+}
+
+.skeletonLineShort {
+  width: 45%;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2.5rem;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.pageNumbers button {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  background: var(--color-card);
+  color: var(--color-navy);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.pageNumbers button.currentPage {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: white;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 70rem) {
+  .marketplaceLayout {
+    grid-template-columns: 14rem minmax(0, 1fr);
+  }
+
+  .productGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .headerRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .marketplaceLayout {
+    display: block;
+  }
+
+  .filterToggle {
+    display: flex;
+    width: 100%;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-card);
+    color: var(--color-navy);
+    font: inherit;
+    font-weight: 780;
+    cursor: pointer;
+  }
+
+  .filters {
+    position: static;
+    display: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .filtersOpen {
+    display: block;
+  }
+}
+
+@media (max-width: 34rem) {
+  .pageHeader {
+    padding-top: 2.75rem;
+  }
+
+  .productGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .resultsToolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .resultsToolbar label,
+  .resultsToolbar select {
+    width: 100%;
+  }
+
+  .pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pageNumbers {
+    justify-content: center;
+    order: -1;
+  }
+
+  .pagination > button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonMedia,
+  .skeletonLine,
+  .skeletonLineShort {
+    animation: none;
+  }
+}
