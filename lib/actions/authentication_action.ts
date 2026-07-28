@@ -7,7 +7,12 @@ import {
   logoutUser,
   normalizeAuthUser,
   registerUser,
+  updateUserProfile,
+  changePassword,
   type AuthUser,
+  type LoginPayload,
+  requestPasswordReset,
+  submitPasswordReset,
 } from "@/lib/api/auth_api";
 import { loginSchema, registerSchema } from "@/lib/validation";
 import { redirect } from "next/navigation";
@@ -38,6 +43,7 @@ export async function registerAction(
   _previousState: AuthActionState = defaultActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  void _previousState;
   const parsedFields = registerSchema.safeParse({
     fullName: formData.get("fullName"),
     email: formData.get("email"),
@@ -69,6 +75,7 @@ export async function loginAction(
   _previousState: AuthActionState = defaultActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  void _previousState;
   const parsedFields = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -97,7 +104,7 @@ export async function loginAction(
     };
   }
 
-  redirect("/dashboard");
+  redirect(user.role?.toLowerCase() === "admin" ? "/admin" : "/dashboard");
 }
 
 export async function getCurrentUserAction(): Promise<AuthUser | null> {
@@ -138,4 +145,133 @@ export async function logoutAction() {
 
 export async function authenticateUser(data: FormData) {
   return loginAction(defaultActionState, data);
+}
+
+export async function updateProfileAction(
+  _previousState: AuthActionState = defaultActionState,
+  formData: FormData
+): Promise<AuthActionState> {
+  void _previousState;
+  const fullName = formData.get("fullName") as string;
+
+  if (!fullName || fullName.trim().length < 2) {
+    return {
+      success: false,
+      message: "Please fix the highlighted fields.",
+      fieldErrors: {
+        fullName: ["Full name must be at least 2 characters"],
+      },
+    };
+  }
+
+  const result = await updateUserProfile(formData);
+
+  if (!result.success) {
+    return {
+      success: false,
+      message: result.message,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Profile updated successfully.",
+  };
+}
+
+export async function changePasswordAction(
+  _previousState: AuthActionState = defaultActionState,
+  formData: FormData
+): Promise<AuthActionState> {
+  void _previousState;
+  const currentPassword = formData.get("currentPassword") as string;
+  const newPassword = formData.get("newPassword") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
+
+  const fieldErrors: FieldErrors = {};
+  if (!currentPassword) {
+    fieldErrors.currentPassword = ["Current password is required"];
+  }
+  if (!newPassword || newPassword.length < 6) {
+    fieldErrors.newPassword = ["New password must be at least 6 characters"];
+  }
+  if (newPassword !== confirmPassword) {
+    fieldErrors.confirmPassword = ["Passwords do not match"];
+  }
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return {
+      success: false,
+      message: "Please fix the highlighted fields.",
+      fieldErrors,
+    };
+  }
+
+  const result = await changePassword({ currentPassword, newPassword });
+
+  if (!result.success) {
+    return {
+      success: false,
+      message: result.message,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Password changed successfully.",
+  };
+}
+
+export async function loginWithoutRedirectAction(payload: LoginPayload) {
+  const result = await loginUser(payload);
+  if (!result.success) {
+    return { success: false, message: result.message };
+  }
+  const user = await getCurrentUserAction();
+  return { success: true, message: result.message, user };
+}
+
+export async function forgotPasswordAction(
+  _previousState: AuthActionState = defaultActionState,
+  formData: FormData
+): Promise<AuthActionState> {
+  void _previousState;
+  const email = String(formData.get("email") ?? "").trim();
+  if (!z.email().safeParse(email).success) {
+    return {
+      success: false,
+      message: "Please enter a valid email address.",
+      fieldErrors: { email: ["A valid email is required."] },
+    };
+  }
+  const result = await requestPasswordReset(email);
+  return {
+    success: result.success,
+    message: result.success
+      ? "If an account exists for that email, a reset link has been sent."
+      : result.message,
+  };
+}
+
+export async function resetPasswordAction(
+  _previousState: AuthActionState = defaultActionState,
+  formData: FormData
+): Promise<AuthActionState> {
+  void _previousState;
+  const token = String(formData.get("token") ?? "");
+  const newPassword = String(formData.get("newPassword") ?? "");
+  const confirmPassword = String(formData.get("confirmPassword") ?? "");
+  const fieldErrors: FieldErrors = {};
+  if (!token) fieldErrors.token = ["The reset link is missing or invalid."];
+  if (newPassword.length < 8) {
+    fieldErrors.newPassword = ["Password must be at least 8 characters."];
+  }
+  if (newPassword !== confirmPassword) {
+    fieldErrors.confirmPassword = ["Passwords do not match."];
+  }
+  if (Object.keys(fieldErrors).length) {
+    return { success: false, message: "Please correct the highlighted fields.", fieldErrors };
+  }
+  const result = await submitPasswordReset(token, newPassword);
+  return { success: result.success, message: result.message ?? (result.success ? "Password reset successfully." : "Password reset failed.") };
 }

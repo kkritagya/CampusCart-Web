@@ -13,6 +13,7 @@ export type ApiRequestOptions = {
   method?: HttpMethod;
   body?: unknown;
   authenticated?: boolean;
+  baseUrl?: string;
 };
 
 async function parseResponseBody(response: Response) {
@@ -38,7 +39,7 @@ export async function apiRequest<T>(
     const headers = new Headers();
     const cookieHeader = await getCookieHeader();
 
-    if (options.body) {
+    if (options.body && !(options.body instanceof FormData)) {
       headers.set("Content-Type", "application/json");
     }
 
@@ -46,10 +47,10 @@ export async function apiRequest<T>(
       headers.set("Cookie", cookieHeader);
     }
 
-    const response = await fetch(`${AUTH_API_BASE_URL}${endpoint}`, {
+    const response = await fetch(`${options.baseUrl ?? AUTH_API_BASE_URL}${endpoint}`, {
       method: options.method ?? "GET",
       headers,
-      body: options.body ? JSON.stringify(options.body) : undefined,
+      body: options.body instanceof FormData ? options.body : (options.body ? JSON.stringify(options.body) : undefined),
       cache: "no-store",
       credentials: "include",
     });
