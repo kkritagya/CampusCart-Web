@@ -98,4 +98,5 @@ export async function clearAuthCookies() {
   for (const cookieName of AUTH_COOKIE_NAMES) {
     cookieStore.delete(cookieName);
   }
+  cookieStore.delete("admin_session");
 }
