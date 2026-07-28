@@ -5,6 +5,9 @@ export type AuthUser = {
   fullName?: string;
   email: string;
   role?: string;
+  phone?: string;
+  address?: string;
+  profilePicture?: string;
 };
 
 export type LoginPayload = {

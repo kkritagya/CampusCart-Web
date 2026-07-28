@@ -32,7 +32,10 @@ export function unwrapBackendPayload<T>(payload: BackendEnvelope<T> | T): T {
       return envelope.user as T;
     }
 
-    if (envelope.data !== undefined) {
+    if (
+      envelope.data !== undefined &&
+      ("success" in envelope || "message" in envelope || "error" in envelope)
+    ) {
       return envelope.data;
     }
   }
